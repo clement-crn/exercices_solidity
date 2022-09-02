@@ -14,7 +14,6 @@ contract ZombieFactory {
 
     Zombie[] public zombies;
 
-    // déclarez les mappages ici
 
     function _createZombie(string _name, uint _dna) private {
         uint id = zombies.push(Zombie(_name, _dna)) - 1;
