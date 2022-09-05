@@ -18,7 +18,7 @@ contract ZombieFactory {
 
     function _createZombie(string memory _name, uint _dna) private {
         zombies.push(Zombie(_name, _dna));
-        //zombies.push(Zombie(_name, _dna)) - 1 (c'est quoi ce bordel) opérateur "-" impossible;
+        //zombies.push(Zombie(_name, _dna)) - 1 opérateur "-" impossible;
         emit NewZombie(_name, _dna);
     }
 
