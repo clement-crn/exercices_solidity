@@ -4,19 +4,20 @@ pragma solidity 0.8.15;
 
 //le paiement sera fait par l'user qui demande le déploiement d'un nouveau contrat
 //campaignFacotry permet aussi de sécuriser le contrat en évitant de le modifier
-contract CampaignFactory {
-    address[] public deployedCampaigns;
+contract CampaignFactory{
+    Campaign[] public deployedCampaigns;
 
-    function createCampaign(uint256 minimum) public {
-        address newCampaign = new Campaign(minimum, msg.sender);
+    function createCampaign(uint minimum) public {
+        Campaign newCampaign = new Campaign(minimum, msg.sender);
         deployedCampaigns.push(newCampaign);
-    }
+    } 
 
-    //donne la liste des contrats déployés
-    function getDeployedCampaigns() public view returns (address[]) {}
+    function getDeployedCampaigns() public view returns(Campaign[] memory) {
+        return deployedCampaigns;
+    }
 }
 
-contract Campaign_contract {
+contract Campaign {
     struct Request {
         string description;
         uint256 value;
@@ -25,6 +26,8 @@ contract Campaign_contract {
         uint256 approvalCount; //votes yes
         mapping(address => bool) approvals;
     }
+
+
 
     uint256 numRequests; //
     mapping(uint256 => Request) requests;
@@ -40,8 +43,8 @@ contract Campaign_contract {
         _;
     }
 
-    function Campaign(uint256 minimum, address creator) public {
-        manager = msg.sender;
+    constructor(uint minimum, address creator) public{
+        manager = creator;
         minimumContribution = minimum;
     }
 
@@ -70,7 +73,7 @@ contract Campaign_contract {
         Request storage r = requests[index];
 
         require(approvers[msg.sender]);
-        require(!r.approvals[msg.sender]); //si la personne a déjà voté et que son addresse est dans le mapping = false
+        require(!r.approvals[msg.sender]); //si la pefrsonne a déjà voté et que son addresse est dans le mapping = false
 
         r.approvals[msg.sender] = true; //requests[index] est remplacé par r (voir ligne 63)
         r.approvalCount++;
