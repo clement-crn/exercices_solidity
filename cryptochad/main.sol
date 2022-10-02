@@ -60,7 +60,7 @@ contract Campaign_contract {
         address payable recipient
     ) public restricted {
         require(approvers[msg.sender]);
-        Request storage r = requests[numRequests++]; //modifié car mapping dans struct n'est plus possible
+        Request storage r = requests[numRequests++]; //modifié car nvelle instance avec mapping n'est plus possible
         r.description = description;
         r.value = value;
         r.recipient = recipient;
@@ -74,13 +74,15 @@ contract Campaign_contract {
         require(approvers[msg.sender]);
         require(!r.approvals[msg.sender]); //si la personne a déjà voté et que son addresse est dans le mapping = false
 
-        r.approvals[msg.sender] = true; //requests[index] est remplacé par r
+        r.approvals[msg.sender] = true; //requests[index] est remplacé par r (voir ligne 63)
         r.approvalCount++;
     }
 
+    //permet de payer le vendeur fictif si les contributeurs sont OK
     function finalizeRequest(uint256 index) public restricted {
         Request storage r = requests[index];
 
+        //au moins + de la moitié des votants
         require(r.approvalCount > (approversCount / 2));
         require(!r.complete);
 
