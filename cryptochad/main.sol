@@ -8,12 +8,12 @@ contract CampaignFactory {
     address[] public deployedCampaigns;
 
     function createCampaign(uint256 minimum) public {
-        address newCampaign = new Campaign(minimum, msg.sender);
+        address newCampaign = new Campaign_contract(minimum, msg.sender);
         deployedCampaigns.push(newCampaign);
     }
 
     //donne la liste des contrats déployés
-    function getDeployedCampaigns() public view returns (address[]){
+    function getDeployedCampaigns() public view returns (address[] memory){
         
     }
 }
