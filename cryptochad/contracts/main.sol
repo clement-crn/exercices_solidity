@@ -4,15 +4,26 @@ pragma solidity 0.8.15;
 
 //le paiement sera fait par l'user qui demande le déploiement d'un nouveau contrat
 //campaignFacotry permet aussi de sécuriser le contrat en évitant de le modifier
+<<<<<<< HEAD
 contract CampaignFactory {
     Campaign[] public deployedCampaigns;
 
     function createCampaign(uint256 minimum) public {
+=======
+contract CampaignFactory{
+    Campaign[] public deployedCampaigns;
+
+    function createCampaign(uint minimum) public {
+>>>>>>> 8818debee866762147b89bdd2667c0855c8e835f
         Campaign newCampaign = new Campaign(minimum, msg.sender);
         deployedCampaigns.push(newCampaign);
-    }
+    } 
 
+<<<<<<< HEAD
     function getDeployedCampaigns() public view returns (Campaign[] memory) {
+=======
+    function getDeployedCampaigns() public view returns(Campaign[] memory) {
+>>>>>>> 8818debee866762147b89bdd2667c0855c8e835f
         return deployedCampaigns;
     }
 }
@@ -26,6 +37,8 @@ contract Campaign {
         uint256 approvalCount; //votes yes
         mapping(address => bool) approvals;
     }
+
+
 
     uint256 numRequests; //
     mapping(uint256 => Request) requests;
@@ -41,7 +54,11 @@ contract Campaign {
         _;
     }
 
+<<<<<<< HEAD
     constructor(uint256 minimum, address creator) public {
+=======
+    constructor(uint minimum, address creator) public{
+>>>>>>> 8818debee866762147b89bdd2667c0855c8e835f
         manager = creator;
         minimumContribution = minimum;
     }
