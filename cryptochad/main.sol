@@ -5,16 +5,22 @@ pragma solidity 0.8.15;
 //le paiement sera fait par l'user qui demande le déploiement d'un nouveau contrat
 //campaignFacotry permet aussi de sécuriser le contrat en évitant de le modifier
 contract CampaignFactory {
-    address[] public deployedCampaigns;
+    Campaign_contract[] public deployedCampaigns;
 
     function createCampaign(uint256 minimum) public {
-        address newCampaign = new Campaign_contract(minimum, msg.sender);
+        Campaign_contract newCampaign = new Campaign_contract(
+            minimum,
+            msg.sender
+        );
         deployedCampaigns.push(newCampaign);
     }
 
-    //donne la liste des contrats déployés
-    function getDeployedCampaigns() public view returns (address[] memory){
-        
+    function getDeployedCampaigns()
+        public
+        view
+        returns (Campaign_contract[] memory)
+    {
+        return deployedCampaigns;
     }
 }
 
@@ -42,7 +48,7 @@ contract Campaign_contract {
         _;
     }
 
-    function Campaign(uint256 minimum, address creator) public {
+    constructor(uint256 minimum, address creator) public {
         manager = msg.sender;
         minimumContribution = minimum;
     }
