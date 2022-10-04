@@ -8,7 +8,7 @@ const hre = require("hardhat");
 
 async function main() {
     const Campaign_contract = await hre.ethers.getContractFactory(
-        "Campaign_contract"
+        "Factory"
     );
     const campaign_contract = await Campaign_contract.deploy();
 
