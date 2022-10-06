@@ -43,11 +43,13 @@ export default () => {
     //fait une nouvelle instance du contrat factory 
     const myInstance = new ethers.Contract("0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512", myABI, provider);
     
-    let blockn;
-    async function test(){
+    var blockn;
+    async function block(){
         blockn = await provider.getBlockNumber();
         console.log(blockn);
     }
+   
+    
 
     /*async function requestAccount() {
         console.log("Demande du compte...");
@@ -78,9 +80,11 @@ export default () => {
         <div>
             <h1>Page de la nouvelle campagne kickstarter</h1>
             
-            <button onClick={test}>block</button>
-            <h3>{blockn}</h3>
+            <button onClick={block}>block</button>
+           
 
+
+           
         </div>
     )
     }
