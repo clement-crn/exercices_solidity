@@ -21,6 +21,7 @@ doc :
     -Holds your private key and can sign things (a Signer) "
 */
 
+//pour le moment, l'ABI est directement générée par Remix 
 import myABI from "./myABI.json"
 
 export default () => {
