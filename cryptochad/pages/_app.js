@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { ethers } from "ethers";
 
+
 /* Cette page:
 -se connecte à metamask
 -affiche le compte concerné via ethers.js
@@ -20,15 +21,35 @@ doc :
     -Holds your private key and can sign things (a Signer) "
 */
 
+import myABI from "./myABI.json"
+
 export default () => {
     const [walletAddress, setWalletAddress] = useState("");
     const [balance, setBalance] = useState("");
+
+     //fait un provider qui interragit avec le smart contract
+     
+     // If you don't specify a //url//, Ethers connects to the default 
+     // (i.e. ``http:/\/localhost:8545``)
+     const provider = new ethers.providers.JsonRpcProvider();
+     
+     // The provider also allows signing transactions to
+     // send ether and pay to change state within the blockchain.
+     // For this, we need the account signer...
+     const signer = provider.getSigner()
+     
+     
     
-
+    //fait une nouvelle instance du contrat factory 
+    const myInstance = new ethers.Contract("0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512", myABI, provider);
     
+    let blockn;
+    async function test(){
+        blockn = await provider.getBlockNumber();
+        console.log(blockn);
+    }
 
-
-    async function requestAccount() {
+    /*async function requestAccount() {
         console.log("Demande du compte...");
 
         // vérifie si metamask existe sur le browser
@@ -44,40 +65,22 @@ export default () => {
             } catch (error) {
                 console.log("Error connecting...");
             }
-        } else {
+        } else{
             alert("Meta Mask not detected");
         }
-    }
-    // créée un provider qui interragit avec le smart contract
-    async function connectWallet() {
-        if (typeof window.ethereum !== "undefined") {
-            await requestAccount();
+    }*/
+   
 
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-        }
-    }
+    
 
-    const getBalance = async (address) => {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const balance = await provider.getBalance(walletAddress);
-        const balanceInEth = ethers.utils.formatEther(balance);
-        console.log(balanceInEth);
-        setBalance(balanceInEth);
-    }
-
+    
     return (
         <div>
             <h1>Page de la nouvelle campagne kickstarter</h1>
-            <button onClick={requestAccount}>
-                Connecter le wallet à Metamask
-            </button>
-            <h3>Adresse du wallet: {walletAddress}</h3>
-
-
-            <button onClick={getBalance}>Balance</button>
-            <h3>Balance: {balance}</h3>
-
+            
+            <button onClick={test}>block</button>
+            <h3>{blockn}</h3>
 
         </div>
-    );
-};
+    )
+    }
