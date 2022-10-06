@@ -7,8 +7,6 @@ import { ethers } from "ethers";
 -se connecte à metamask
 -affiche le compte concerné via ethers.js
 -affiche la balance du compte metamask
-
-
 */
 
 /*dans le projet de Gridder, ce fichier remplace :
@@ -21,6 +19,7 @@ doc :
     -Holds your private key and can sign things (a Signer) "
 */
 
+//pour le moment, l'ABI est directement générée par Remix 
 import myABI from "./myABI.json"
 
 export default () => {
@@ -41,29 +40,29 @@ export default () => {
      
     
     //fait une nouvelle instance du contrat factory 
-    const myInstance = new ethers.Contract("0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512", myABI, provider);
+    const myInstance = new ethers.Contract("0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512", myABI, signer);
     
+
     var blockn;
     async function block(){
         blockn = await provider.getBlockNumber();
         console.log(blockn);
+        
+         await myInstance.createRequest("lol",0,"0x70997970C51812dc3A010C7d01b50e0d17dc79C8");
     }
    
     
 
-    /*async function requestAccount() {
+    /* async function requestAccount() {
         console.log("Demande du compte...");
-
         // vérifie si metamask existe sur le browser
         if (window.ethereum) {
             console.log("détecté");
-
             try {
                 const accounts = await window.ethereum.request({
                     method: "eth_requestAccounts",
                 });
                 setWalletAddress(accounts[0]);
-
             } catch (error) {
                 console.log("Error connecting...");
             }

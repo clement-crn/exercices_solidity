@@ -1,0 +1,55 @@
+Account #0: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 (10000 ETH)
+Private Key: 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+
+const [walletAddress, setWalletAddress] = useState("");
+    const [balance, setBalance] = useState("");
+
+     //fait un provider qui interragit avec le smart contract
+     
+     // If you don't specify a //url//, Ethers connects to the default 
+     // (i.e. ``http:/\/localhost:8545``)
+     const provider = new ethers.providers.JsonRpcProvider();
+     
+     // The provider also allows signing transactions to
+     // send ether and pay to change state within the blockchain.
+     // For this, we need the account signer...
+
+     //const signer = provider.getSigner()
+     const signer = new ethers.Wallet("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80", provider);
+    
+    //fait une nouvelle instance du contrat factory                                         //priver / signer
+    const myInstance = new ethers.Contract("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", myABI, signer);
+    
+    var blockn;
+    var test;
+    async function block(){
+        blockn = await provider.getBlockNumber();
+        await myInstance.createCampaign(0);
+        console.log(blockn);
+    }
+   
+    
+
+    /*async function requestAccount() {
+        console.log("Demande du compte...");
+
+        // vérifie si metamask existe sur le browser
+        if (window.ethereum) {
+            console.log("détecté");
+
+            try {
+                const accounts = await window.ethereum.request({
+                    method: "eth_requestAccounts",
+                });
+                setWalletAddress(accounts[0]);
+
+            } catch (error) {
+                console.log("Error connecting...");
+            }
+        } else{
+            alert("Meta Mask not detected");
+        }
+    }*/
+   
+
+    
